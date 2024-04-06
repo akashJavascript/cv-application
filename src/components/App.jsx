@@ -3,20 +3,16 @@ import { useState } from 'react';
 
 import WorkExperience from './WorkExperience';
 import GeneralInfo from './GeneralInfo';
-// import Skills from './Skills';
+import Skills from './Skills';
 function App() {
   const [name, setName] = useState('John Doe');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [zipCode, setZipCode] = useState('');
-  const [workExperience, setWorkExperience] = useState([]);
+  const [workExperience, setWorkExperience] = useState([
+    { company: '', position: '', startDate: '', endDate: '', tasks: '' },
+  ]);
   const [skills, setSkills] = useState([]);
-  const [skill, setSkill] = useState('');
-  const [company, setCompany] = useState('');
-  const [position, setPosition] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [tasks, setTasks] = useState('');
   return (
     <>
       <h1>React Form</h1>
@@ -32,19 +28,59 @@ function App() {
         setZipCode={setZipCode}
       />
       <h2>Work Experience</h2>
-      <WorkExperience
-        company={company}
-        setCompany={setCompany}
-        position={position}
-        setPosition={setPosition}
-        startDate={startDate}
-        setStartDate={setStartDate}
-        endDate={endDate}
-        setEndDate={setEndDate}
-        tasks={tasks}
-        setTasks={setTasks}
-      />
-      
+      {workExperience.map((experience, index) => (
+        <WorkExperience
+          key={index}
+          company={experience.company}
+          setCompany={value => {
+            const newWorkExperience = [...workExperience];
+            newWorkExperience[index].company = value;
+            setWorkExperience(newWorkExperience);
+          }}
+          position={experience.position}
+          setPosition={value => {
+            const newWorkExperience = [...workExperience];
+            newWorkExperience[index].position = value;
+            setWorkExperience(newWorkExperience);
+          }}
+          startDate={experience.startDate}
+          setStartDate={value => {
+            const newWorkExperience = [...workExperience];
+            newWorkExperience[index].startDate = value;
+            setWorkExperience(newWorkExperience);
+          }}
+          endDate={experience.endDate}
+          setEndDate={value => {
+            const newWorkExperience = [...workExperience];
+            newWorkExperience[index].endDate = value;
+            setWorkExperience(newWorkExperience);
+          }}
+          tasks={experience.tasks}
+          setTasks={value => {
+            const newWorkExperience = [...workExperience];
+            newWorkExperience[index].tasks = value;
+            setWorkExperience(newWorkExperience);
+          }}
+        />
+      ))}
+      <button
+        onClick={() =>
+          setWorkExperience([
+            ...workExperience,
+            {
+              company: '',
+              position: '',
+              startDate: '',
+              endDate: '',
+              tasks: '',
+            },
+          ])
+        }
+      >
+        Add Work Experience
+      </button>
+      <h2>Skills</h2>
+      <Skills skills={skills} setSkills={setSkills} />
     </>
   );
 }

@@ -1,30 +1,31 @@
-// import { useState } from 'react';
-// import '../styles/Skills.css';
-// function Skills() {
-//   const addSkill = () => {
-//     setSkills([...skills, skill]);
-//     setSkill('');
-//   };
-//   return (
-//     <div className="skills">
-//       <form action="">
-//         <label htmlFor="skill">Skill:</label>
-//         <input
-//           type="text"
-//           id="skill"
-//           value={skill}
-//           onChange={e => setSkill(e.target.value)}
-//         />
-//         <button type="button" onClick={addSkill}>
-//           Add Skill
-//         </button>
-//       </form>
-//       <ul>
-//         {skills.map((skill, index) => (
-//           <li key={index}>{skill}</li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// }
-// export default Skills;
+import '../styles/Skills.css';
+import { useState } from 'react';
+function Skills({ skills, setSkills }) {
+  let [currentSkill, setCurrentSkill] = useState('');
+  return (
+    <div className="skills">
+      <form action="">
+        <label htmlFor="skill">Skill:</label>
+        <input
+          type="text"
+          id="skill"
+          onChange={e => setCurrentSkill(e.target.value)}
+        />
+        <button
+          onClick={e => {
+            e.preventDefault();
+            setSkills([...skills, currentSkill]);
+          }}
+        >
+          Add Skill
+        </button>
+      </form>
+    <ul>
+        {skills.map((skill, index) => (
+            <li key={index}>{skill}</li>
+        ))}
+    </ul>
+    </div>
+  );
+}
+export default Skills;
