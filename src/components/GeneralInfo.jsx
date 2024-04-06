@@ -1,11 +1,5 @@
-import { useState } from 'react';
 import '../styles/GeneralInfo.css';
-
-function GeneralInfo() {
-  const [name, setName] = useState('John Doe');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [zipCode, setZipCode] = useState('');
+function GeneralInfo({ name, setName, email, setEmail, phone, setPhone, zipCode, setZipCode}) {
   return (
     <form action="">
       <label htmlFor="name">Name:</label>
