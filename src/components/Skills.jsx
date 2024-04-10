@@ -9,22 +9,24 @@ function Skills({ skills, setSkills }) {
         <input
           type="text"
           id="skill"
+          value={currentSkill}
           onChange={e => setCurrentSkill(e.target.value)}
         />
         <button
           onClick={e => {
             e.preventDefault();
             setSkills([...skills, currentSkill]);
+            setCurrentSkill('');
           }}
         >
           Add Skill
         </button>
       </form>
-    <ul>
+      <ul>
         {skills.map((skill, index) => (
-            <li key={index}>{skill}</li>
+          <li key={index}>{skill}</li>
         ))}
-    </ul>
+      </ul>
     </div>
   );
 }

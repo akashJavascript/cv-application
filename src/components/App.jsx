@@ -4,6 +4,8 @@ import { useState } from 'react';
 import WorkExperience from './WorkExperience';
 import GeneralInfo from './GeneralInfo';
 import Skills from './Skills';
+import Education from './Education';
+import Cv from './Cv';
 function App() {
   const [name, setName] = useState('John Doe');
   const [email, setEmail] = useState('');
@@ -13,74 +15,161 @@ function App() {
     { company: '', position: '', startDate: '', endDate: '', tasks: '' },
   ]);
   const [skills, setSkills] = useState([]);
+  const [education, setEducation] = useState([
+    { school: '', startDate: '', endDate: '', major: '' },
+  ]);
+  function setterFunction(state, setter, index, value, arrItem) {
+    const newState = [...state];
+    newState[index][arrItem] = value;
+    setter(newState);
+  }
   return (
     <>
-      <h1>React Form</h1>
-      <h2>General Info</h2>
-      <GeneralInfo
-        name={name}
-        setName={setName}
-        email={email}
-        setEmail={setEmail}
-        phone={phone}
-        setPhone={setPhone}
-        zipCode={zipCode}
-        setZipCode={setZipCode}
-      />
-      <h2>Work Experience</h2>
-      {workExperience.map((experience, index) => (
-        <WorkExperience
-          key={index}
-          company={experience.company}
-          setCompany={value => {
-            const newWorkExperience = [...workExperience];
-            newWorkExperience[index].company = value;
-            setWorkExperience(newWorkExperience);
-          }}
-          position={experience.position}
-          setPosition={value => {
-            const newWorkExperience = [...workExperience];
-            newWorkExperience[index].position = value;
-            setWorkExperience(newWorkExperience);
-          }}
-          startDate={experience.startDate}
-          setStartDate={value => {
-            const newWorkExperience = [...workExperience];
-            newWorkExperience[index].startDate = value;
-            setWorkExperience(newWorkExperience);
-          }}
-          endDate={experience.endDate}
-          setEndDate={value => {
-            const newWorkExperience = [...workExperience];
-            newWorkExperience[index].endDate = value;
-            setWorkExperience(newWorkExperience);
-          }}
-          tasks={experience.tasks}
-          setTasks={value => {
-            const newWorkExperience = [...workExperience];
-            newWorkExperience[index].tasks = value;
-            setWorkExperience(newWorkExperience);
-          }}
-        />
-      ))}
-      <button
-        onClick={() =>
-          setWorkExperience([
-            ...workExperience,
-            {
-              company: '',
-              position: '',
-              startDate: '',
-              endDate: '',
-              tasks: '',
-            },
-          ])
-        }
-      >
-        Add Work Experience
-      </button>
-      <h2>Skills</h2>
-      <Skills skills={skills} setSkills={setSkills} />
+      <div className="form-container">
+        <div className="general-info-container form-section">
+          <h2>General Info</h2>
+          <GeneralInfo
+            name={name}
+            setName={setName}
+            email={email}
+            setEmail={setEmail}
+            phone={phone}
+            setPhone={setPhone}
+            zipCode={zipCode}
+            setZipCode={setZipCode}
+          />
+        </div>
+        <div className="work-exp-container form-section">
+          <h2>Work Experience</h2>
+
+          {workExperience.map((experience, index) => (
+            <WorkExperience
+              key={index}
+              company={experience.company}
+              setCompany={value => {
+                setterFunction(
+                  workExperience,
+                  setWorkExperience,
+                  index,
+                  value,
+                  'company'
+                );
+              }}
+              position={experience.position}
+              setPosition={value => {
+                setterFunction(
+                  workExperience,
+                  setWorkExperience,
+                  index,
+                  value,
+                  'position'
+                );
+              }}
+              startDate={experience.startDate}
+              setStartDate={value => {
+                setterFunction(
+                  workExperience,
+                  setWorkExperience,
+                  index,
+                  value,
+                  'startDate'
+                );
+              }}
+              endDate={experience.endDate}
+              setEndDate={value => {
+                setterFunction(
+                  workExperience,
+                  setWorkExperience,
+                  index,
+                  value,
+                  'endDate'
+                );
+              }}
+              tasks={experience.tasks}
+              setTasks={value => {
+                setterFunction(
+                  workExperience,
+                  setWorkExperience,
+                  index,
+                  value,
+                  'tasks'
+                );
+              }}
+            />
+          ))}
+          <button
+            onClick={() =>
+              setWorkExperience([
+                ...workExperience,
+                {
+                  company: '',
+                  position: '',
+                  startDate: '',
+                  endDate: '',
+                  tasks: '',
+                },
+              ])
+            }
+          >
+            Add Work Experience
+          </button>
+        </div>
+        <div className="skills-container form-section">
+          <h2>Skills</h2>
+          <Skills skills={skills} setSkills={setSkills} />
+        </div>
+        <div className="education-container form-section">
+          <h2>Education</h2>
+          {education.map((edu, index) => (
+            <Education
+              key={index}
+              school={edu.school}
+              setSchool={value => {
+                setterFunction(education, setEducation, index, value, 'school');
+              }}
+              startDate={edu.startDate}
+              setStartDate={value => {
+                setterFunction(
+                  education,
+                  setEducation,
+                  index,
+                  value,
+                  'startDate'
+                );
+              }}
+              endDate={edu.endDate}
+              setEndDate={value => {
+                setterFunction(education, setEducation, index, value, 'endDate');
+              }}
+              major={edu.major}
+              setMajor={value => {
+                setterFunction(education, setEducation, index, value, 'major');
+              }}
+            />
+          ))}
+          <button
+            onClick={() =>
+              setEducation([
+                ...education,
+                { school: '', startDate: '', endDate: '', major: '' },
+              ])
+            }
+          >
+            Add Education
+          </button>
+        </div>
+      </div>
+      <div className="cv-container">
+        <Cv
+          name={name}
+          email={email}
+          phone={phone}
+          zipCode={zipCode}
+          workExperience={workExperience}
+          skills={skills}
+          education={education}
+        ></Cv>
+      </div>
     </>
   );
 }
