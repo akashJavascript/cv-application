@@ -18,4 +18,8 @@ body {
 }
 .form-container {
   display: grid;
+  margin: 20px;
+}
+.cv-container{
+  margin: 20px;
 }
